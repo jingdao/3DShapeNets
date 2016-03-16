@@ -20,6 +20,10 @@ resume48_l6.m
 
 # Saved models
 *.mat
+*.txt
+.*.swp
+.*.swo
+*.pyc
 
 # log files
 *.log*
