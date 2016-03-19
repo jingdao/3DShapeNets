@@ -31,7 +31,7 @@ class Layer:
 class Model:
 	def __init__(self,filename):
 		f = open(filename,'r')
-		self.isGenerative = filename.startswith('generative')
+		self.isGenerative = 'generative' in filename
 		self.layers = []
 		while True:
 			l = f.readline()

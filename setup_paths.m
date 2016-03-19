@@ -3,3 +3,4 @@ addpath('bp');
 addpath('generative');
 addpath('util');
 addpath('voxelization');
+addpath('scripts');
