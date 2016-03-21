@@ -37,9 +37,9 @@ for c = 1 : num_classes
 			instance_data(i1:i2,i1:i2,i1:i2) = instance;
 			fwrite(cv,instance_data,'int8');
 
-			[depth_new, K, crop] = off2im(filename, 1, (viewpoint - 1) * angle_inc * pi / 180, R_o, obj_center(1), obj_center(2), obj_center(3), [1;1;1], 0, 0);
+			[depth_new, K, crop] = off2im([category_path '/' filename], 1, (viewpoint - 1) * angle_inc * pi / 180, R_o, obj_center(1), obj_center(2), obj_center(3), [1;1;1], 0, 0);
 			depth{1} = depth_new; R{1} = R_o; trans{1} = trans_o; mult = 5;
-			gridDists = TSDF(depth, K, obj_center, R, trans, volume_size * mult, pad_size * mult, crop);
+			gridDists = TSDF(depth, K, obj_center, R, trans, volume_size * mult, pad_size * mult, [], crop);
 			gridDists = cubicle2col(gridDists, mult);
 			surface_num = sum((gridDists < 1 & gridDists > -1),1);
 			out_num = sum((gridDists == 1),1);
@@ -52,7 +52,7 @@ for c = 1 : num_classes
 			gridDists(out_index) = 0;
 			gridDists = permute(gridDists, [3,1,2]);
 			fwrite(pv,gridDists,'int8');
-
+			fprintf('Processed %s\n',filename);
 		end
 	end
 end

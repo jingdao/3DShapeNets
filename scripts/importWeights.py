@@ -23,7 +23,7 @@ class Layer:
 		self.b=None
 	
 	def __str__(self):
-		return "%-15s %s" % (self.type,str(self.layerSize))
+		return "<%-15s %s>" % (self.type,str(self.layerSize))
 
 	def __repr__(self):
 		return str(self)
