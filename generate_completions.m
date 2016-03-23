@@ -34,8 +34,9 @@ for i = 1 : length(files)
         R_o = AngleAxis2RotationMatrix(axis_angle); trans_o = [0,0,0]';
 
         [depth_new, K, crop] = off2im(filename, 1, (viewpoint - 1) * angle_inc * pi / 180, R_o, obj_center(1), obj_center(2), obj_center(3), [1;1;1], 0, 0);
+		%[depth_new, K, crop] = off2im('3D/chair.off',1,0,[-1,0,0;0,1,0;0,0,-1],0,0,-2,[1;1;1],0,0);
         depth{1} = depth_new; R{1} = R_o; trans{1} = trans_o; mult = 5;
-        gridDists = TSDF(depth, K, obj_center, R, trans, volume_size * mult, pad_size * mult, crop);
+        gridDists = TSDF(depth, K, obj_center, R, trans, volume_size * mult, pad_size * mult, [], crop);
 
         gridDists = cubicle2col(gridDists, mult);
         surface_num = sum((gridDists < 1 & gridDists > -1),1);

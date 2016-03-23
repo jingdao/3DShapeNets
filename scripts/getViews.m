@@ -1,6 +1,6 @@
 
-classes = {'bathtub'};
-%classes = {'bathtub','bed','chair','desk','dresser','monitor','night_stand','sofa','table','toilet'};
+%classes = {'bathtub'};
+classes = {'bathtub','bed','chair','desk','dresser','monitor','night_stand','sofa','table','toilet'};
 num_classes = length(classes);
 volume_size = 24;
 pad_size = 3;
@@ -20,6 +20,7 @@ R_o = AngleAxis2RotationMatrix(axis_angle); trans_o = [0,0,0]';
 
 pv = fopen('partial_view.data','wb');
 cv = fopen('complete_view.data','wb');
+lb = fopen('labels.data','w');
 
 for c = 1 : num_classes
 	category_path = [ 'ModelNet10/' classes{c} '/train'];
@@ -29,6 +30,7 @@ for c = 1 : num_classes
 		filename = files(i).name;
 		l = length(filename);
 		if (l>=5 && strcmp(filename(length(filename)-3:length(filename)),'.off'))
+			fprintf(lb,'%d %s\n',c,classes{c});
 			off_data = off_loader([category_path '/' filename],(viewpoint-1)*angle_inc);
 			instance = polygon2voxel(off_data,[volume_size,volume_size,volume_size],'auto');
 			instance_data = zeros(data_size,data_size,data_size);
@@ -59,3 +61,5 @@ end
 
 fclose(pv);
 fclose(cv);
+fclose(lb);
+

@@ -13,18 +13,24 @@ def plotObject(obj):
 	plt.show()
 
 class GridData:
-	def __init__(self,filename):
-		f = open(filename,'r')
+	def __init__(self,datafile,labelfile):
+		f = open(datafile,'r')
+		f2 = open(labelfile,'r')
 		self.samples = []
+		self.labels = []
+		self.label_names = []
 		self.data_size = 30
-		self.source = filename
+		self.source = datafile
 		sample_size = self.data_size ** 3
-		file_size = os.path.getsize(filename)
+		file_size = os.path.getsize(datafile)
 		self.num_samples = file_size / sample_size
 		for i in range(self.num_samples):
 			arr = numpy.fromfile(f,dtype=numpy.int8,count=sample_size)
 			matrix = arr.reshape((self.data_size,self.data_size,self.data_size))
 			self.samples.append(matrix.transpose())
+			l = f2.readline().split()
+			self.labels.append(int(l[0]))
+			self.label_names.append(l[1])
 	
 	def __str__(self):
 		return "<%s %d samples (%dx%dx%d)>" % (self.source,self.num_samples,self.data_size,self.data_size,self.data_size)

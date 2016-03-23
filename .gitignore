@@ -24,6 +24,8 @@ resume48_l6.m
 .*.swp
 .*.swo
 *.pyc
+*.data
+*.png
 
 # log files
 *.log*
