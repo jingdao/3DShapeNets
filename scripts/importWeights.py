@@ -19,6 +19,8 @@ class Layer:
 		self.kernelSize=[]
 		self.layerSize=[]
 		self.w=None
+		self.uw=None
+		self.dw=None
 		self.c=None
 		self.b=None
 	
@@ -31,7 +33,7 @@ class Layer:
 class Model:
 	def __init__(self,filename):
 		f = open(filename,'r')
-		self.isGenerative = 'generative' in filename
+		self.isGenerative = not 'discriminative' in filename
 		self.layers = []
 		while True:
 			l = f.readline()
@@ -60,10 +62,17 @@ class Model:
 						ly.stride = f.readline().split()[1]
 						for i in f.readline().split()[1:]:
 							ly.kernelSize.append(int(i))
-					if f.readline().startswith('w'):
-						ly.w = toNumpyArray(f)
-					if f.readline().startswith('c'):
-						ly.c = toNumpyArray(f)
+					while True:
+						line = f.readline()
+						if line.startswith('w'):
+							ly.w = toNumpyArray(f)
+						elif line.startswith('uw'):
+							ly.uw = toNumpyArray(f)
+						elif line.startswith('dw'):
+							ly.dw = toNumpyArray(f)
+						elif line.startswith('c'):
+							ly.c = toNumpyArray(f)
+							break
 					if self.isGenerative:
 						if f.readline().startswith('b'):
 							ly.b = toNumpyArray(f)
