@@ -14,7 +14,7 @@ def plotObject(obj):
 
 class GridData:
 	def __init__(self,datafile,labelfile):
-		f = open(datafile,'r')
+		f = open(datafile,'rb')
 		f2 = open(labelfile,'r')
 		self.samples = []
 		self.labels = []
@@ -39,11 +39,12 @@ class GridData:
 		return str(self)
 
 if __name__=="__main__":
-	partial_view_file = 'partial_view.data'
-	complete_view_file = 'complete_view.data'
+	partial_view_file = 'partial_view_single.data'
+	complete_view_file = 'complete_view_single.data'
+	label_file = 'labels_single.data'
 
-	partial_views = GridData(partial_view_file)
-	complete_views = GridData(complete_view_file)
+	partial_views = GridData(partial_view_file,label_file)
+	complete_views = GridData(complete_view_file,label_file)
 	print(partial_views)
 	print(complete_views)
 

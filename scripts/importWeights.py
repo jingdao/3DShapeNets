@@ -1,4 +1,5 @@
 import numpy
+import os
 
 def toNumpyArray(fid):
 	shape=[]
@@ -32,7 +33,7 @@ class Layer:
 
 class Model:
 	def __init__(self,filename):
-		f = open(filename,'r')
+		f = open(filename,'rb')
 		self.isGenerative = not 'discriminative' in filename
 		self.layers = []
 		while True:
@@ -68,6 +69,7 @@ class Model:
 							ly.w = toNumpyArray(f)
 						elif line.startswith('uw'):
 							ly.uw = toNumpyArray(f)
+							ly.w = ly.uw
 						elif line.startswith('dw'):
 							ly.dw = toNumpyArray(f)
 						elif line.startswith('c'):
