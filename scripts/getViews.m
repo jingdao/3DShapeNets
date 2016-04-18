@@ -1,5 +1,5 @@
 
-%classes = {'bathtub'};
+%classes = {'table'};
 classes = {'bathtub','bed','chair','desk','dresser','monitor','night_stand','sofa','table','toilet'};
 num_classes = length(classes);
 volume_size = 24;
@@ -31,7 +31,7 @@ for c = 1 : num_classes
 		if (l>=5 && strcmp(filename(length(filename)-3:length(filename)),'.off'))
 			for viewpoint = 1 : 360/angle_inc
 				fprintf(lb,'%d %s\n',c,classes{c});
-				off_data = off_loader([category_path '/' filename],(viewpoint-1)*angle_inc);
+				off_data = off_loader([category_path '/' filename],-(viewpoint-1)*angle_inc);
 				instance = polygon2voxel(off_data,[volume_size,volume_size,volume_size],'auto');
 				instance_data = zeros(data_size,data_size,data_size);
 				i1 = 1 + pad_size;
