@@ -17,12 +17,12 @@ angle = atan2(norm(cross(camera_direction, obj_center - camera_center)),dot(came
 axis_angle = axis / norm(axis) * (-angle);
 R_o = AngleAxis2RotationMatrix(axis_angle); trans_o = [0,0,0]';
 
-pv = fopen('partial_view.data','wb');
-cv = fopen('complete_view.data','wb');
-lb = fopen('labels.data','w');
+pv = fopen('partial_view_test.data','wb');
+cv = fopen('complete_view_test.data','wb');
+lb = fopen('labels_test.data','w');
 
 for c = 1 : num_classes
-	category_path = [ 'ModelNet10/' classes{c} '/train'];
+	category_path = [ 'ModelNet10/' classes{c} '/test'];
 	files = dir(category_path);
 	j=1;
     for i = 1 : length(files)
